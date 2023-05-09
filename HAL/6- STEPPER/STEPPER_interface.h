@@ -24,7 +24,7 @@ typedef struct STEPPER_t
 }STEPPER_t;
 
 
-uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint8 Copy_u16Angle, uint8 Copy_u8Direction);
+uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint16 Copy_u16Angle, uint8 Copy_u8Direction);
 
 
 #endif

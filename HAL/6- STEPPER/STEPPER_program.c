@@ -8,6 +8,8 @@
 
 
 #include "STD_TYPES.h"
+#include "BIT_MATH.h"
+#include "DEFINES.h"
 
 #include "DIO_interface.h"
 
@@ -17,7 +19,7 @@
 #include "STEPPER_private.h"
 #include "STEPPER_interface.h"
 
-uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint8 Copy_u16Angle, uint8 Copy_u8Direction)
+uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint16 Copy_u16Angle, uint8 Copy_u8Direction)
 {
 	/*Define Variables*/
 	uint8 Local_u8ErrorState = OK;
@@ -28,10 +30,10 @@ uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint8 Copy_u16A
 	if(Copy_psteppertMotorInfo != NULL)
 	{
 		/*Calculating the full steps to take*/
-		Local_u16FullSteps = (uint16) (((uint32) Copy_u16Angle * 2048UL) / 360UL);
+		Local_u16FullSteps = (uint16) ((((uint32) Copy_u16Angle) * 2048UL) / 360UL);
 
 		/*Taking the steps inside for loop, every loop move for 1 step*/
-		if(Copy_u8Direction == STEPPER_u8ROTATE_CW)
+		if(Copy_u8Direction == STEPPER_u8ROTATE_CCW)
 		{
 			for(Local_u16Counter = 0; Local_u16Counter < Local_u16FullSteps; Local_u16Counter++)
 			{
@@ -65,10 +67,10 @@ uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint8 Copy_u16A
 					DIO_u8SetPinValue(Copy_psteppertMotorInfo -> Port, Copy_psteppertMotorInfo -> OrangePin, DIO_u8PIN_LOW);
 					break;
 				}
-				_delay_ms(2);
+				_delay_ms(10);
 			}
 		}
-		else if(Copy_u8Direction == STEPPER_u8ROTATE_CCW)
+		else if(Copy_u8Direction == STEPPER_u8ROTATE_CW)
 		{
 			for(Local_u16Counter = 0; Local_u16Counter < Local_u16FullSteps; Local_u16Counter++)
 			{
@@ -102,7 +104,7 @@ uint8 STEPPER_u8Rotate(const STEPPER_t *Copy_psteppertMotorInfo, uint8 Copy_u16A
 					DIO_u8SetPinValue(Copy_psteppertMotorInfo -> Port, Copy_psteppertMotorInfo -> OrangePin, DIO_u8PIN_LOW);
 					break;
 				}
-				_delay_ms(2);
+				_delay_ms(10);
 			}
 		}
 		else
